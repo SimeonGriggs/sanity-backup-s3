@@ -22,7 +22,7 @@ SECRET_ACCESS_KEY
 
 ### It's up to you to:
 
-- Host this somewhere adequelty if you want to run it in an automated fashion _from the cloud_.
+- Host this somewhere adequately if you want to run it in an automated fashion _from the cloud_.
 - Be entirely cool with how average the code is.
 - Question many of my decisions.
 
