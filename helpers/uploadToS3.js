@@ -1,8 +1,6 @@
 import AWS from 'aws-sdk';
 import fs from 'fs';
 
-import { cleanUp } from './cleanUp';
-
 /**
  * Uploads our export to S3
  * @param {string} Key S3 uploader calls the filename a "Key"
@@ -32,7 +30,5 @@ export function uploadToS3(Key, Bucket) {
     if (err) throw err;
 
     console.log(`File uploaded successfully. ${data.Location}`);
-
-    cleanUp();
   });
 }

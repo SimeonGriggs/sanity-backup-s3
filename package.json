@@ -4,9 +4,9 @@
   "description": "",
   "main": "app.js",
   "dependencies": {
-    "@sanity/cli": "^1.150.7",
     "@sanity/client": "^1.150.7",
     "@sanity/core": "^1.150.7",
+    "@sanity/export": "^1.150.7",
     "aws-sdk": "^2.732.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
@@ -16,7 +16,6 @@
   "devDependencies": {},
   "scripts": {
     "start": "node --experimental-modules --es-module-specifier-resolution=node app.js",
-    "export": "sanity dataset export",
     "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node app.js --inspect"
   },
   "author": "",
