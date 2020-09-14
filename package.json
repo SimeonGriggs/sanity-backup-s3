@@ -1,0 +1,29 @@
+{
+  "name": "sanity-backup-s3",
+  "version": "0.0.1",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "@sanity/client": "^1.150.7",
+    "@sanity/core": "^1.150.7",
+    "aws-sdk": "^2.732.0",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "http": "0.0.1-security",
+    "node-fetch": "^2.6.0",
+    "stream": "0.0.2"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node --experimental-modules --es-module-specifier-resolution=node app.js",
+    "export": "sanity dataset export",
+    "test": "echo \"yo test\"",
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node app.js --inspect"
+  },
+  "author": "",
+  "license": "ISC",
+  "engines": {
+    "node": "12.x"
+  },
+  "type": "module"
+}
