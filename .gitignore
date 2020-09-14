@@ -4,5 +4,4 @@ npm-debug.log
 /*.env
 
 # Files the app creates
-sanity.json
 *.tar.gz
