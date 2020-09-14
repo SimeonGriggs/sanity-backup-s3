@@ -1,6 +1,6 @@
 # Sanity Backup to S3
 
-Satisfy your inner risk manager by taking automated backups from Sanity's CLI tool directly to your S3 bucket!
+Satisfy your inner risk manager by taking automated backups from Sanity directly to your S3 bucket!
 
 1. Clone this repo
 2. `npm install`
