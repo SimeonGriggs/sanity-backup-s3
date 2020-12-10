@@ -17,7 +17,15 @@ SECRET_ACCESS_KEY
 SANITY_TOKEN
 ```
 
-5. Visit `http://localhost:5501/SANITY_PROJECT_ID/DATASET/BUCKET_NAME`
+5. Optionally, if you want an email notification, I've integrated Mailgun, which will need these keys in `.env`
+
+```
+MAILGUN_API
+MAILGUN_DOMAIN
+MAILGUN_HOST
+```
+
+6. Visit `http://localhost:5501/SANITY_PROJECT_ID/DATASET/BUCKET_NAME/EMAIL`
 
 ### This tool will:
 

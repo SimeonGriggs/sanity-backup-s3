@@ -11,17 +11,50 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "http": "0.0.1-security",
+    "mailgun-js": "^0.22.0",
     "stream": "0.0.2"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "babel-eslint": "^10.1.0",
+    "eslint": "^7.15.0",
+    "eslint-config-airbnb": "^18.2.0",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-config-wesbos": "^1.0.1",
+    "eslint-plugin-html": "^6.1.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.2.0",
+    "eslint-plugin-react": "^7.21.5",
+    "eslint-plugin-react-hooks": "^4.2.0",
+    "prettier": "^2.2.1"
+  },
   "scripts": {
     "start": "node --experimental-modules --es-module-specifier-resolution=node app.js",
-    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node app.js --inspect"
+    "dev": "nodemon --experimental-modules --es-module-specifier-resolution=node app.js --inspect",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
   },
   "author": "",
   "license": "ISC",
   "engines": {
     "node": "12.x"
   },
-  "type": "module"
+  "type": "module",
+  "eslintConfig": {
+    "extends": [
+      "wesbos"
+    ],
+    "rules": {
+      "no-console": "off",
+      "prettier/prettier": [
+        "error",
+        {
+          "trailingComma": "es5",
+          "singleQuote": true,
+          "printWidth": 80,
+          "semi": false
+        }
+      ]
+    }
+  }
 }
