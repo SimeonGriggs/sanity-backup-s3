@@ -33,6 +33,11 @@ app.get('/:projectId/:dataset/:Bucket/:email', (req, res) => {
     return res.send(`No S3 SECRET_ACCESS_KEY config variable`)
   if (!SANITY_TOKEN) return res.send(`No SANITY_TOKEN config variable`)
 
+  if (email) {
+    if (!MAILGUN_DOMAIN) return res.send(`No MAILGUN_DOMAIN config variable`)
+    if (!MAILGUN_HOST) return res.send(`No MAILGUN_HOST config variable`)
+  }
+
   // Instantiate Sanity Client
   const client = sanityClient({
     projectId,

@@ -6,7 +6,7 @@ export function sendEmail(downloadLink, downloadEmail) {
   const mg = mailgunFactory({
     apiKey: MAILGUN_API,
     domain: MAILGUN_DOMAIN,
-    host: MAILGUN_HOST,
+    host: MAILGUN_HOST || '',
   })
 
   const data = {
@@ -16,7 +16,7 @@ export function sendEmail(downloadLink, downloadEmail) {
     text: `Download your backup: ${downloadLink}`,
   }
 
-  return mg.messages().send(data, function (error, body) {
+  mg.messages().send(data, function (error, body) {
     if (error) {
       console.error({ error })
     } else {
