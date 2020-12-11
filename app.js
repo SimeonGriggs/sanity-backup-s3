@@ -16,22 +16,27 @@ dotenv.config()
  */
 app.get('/:projectId/:dataset/:Bucket/:email', (req, res) => {
   const { projectId, dataset, Bucket, email } = req.params
+
+  if (!projectId) return res.send(`No projectId`)
+  if (!dataset) return res.send(`No dataset`)
+  if (!Bucket) return res.send(`No S3 Bucket name`)
+
   const {
     ACCESS_KEY,
     SECRET_ACCESS_KEY,
-    SANITY_TOKEN,
     MAILGUN_API,
     MAILGUN_DOMAIN,
     MAILGUN_HOST,
   } = process.env
 
-  if (!projectId) return res.send(`No projectId`)
-  if (!dataset) return res.send(`No dataset`)
-  if (!Bucket) return res.send(`No S3 Bucket name`)
+  // Get dynamic key for Sanity API Token
+  const sanityTokenKey = `${projectId.toUpperCase()}_TOKEN`
+  const SANITY_TOKEN = process.env[sanityTokenKey]
+
   if (!ACCESS_KEY) return res.send(`No S3 ACCESS_KEY config variable`)
   if (!SECRET_ACCESS_KEY)
     return res.send(`No S3 SECRET_ACCESS_KEY config variable`)
-  if (!SANITY_TOKEN) return res.send(`No SANITY_TOKEN config variable`)
+  if (!SANITY_TOKEN) return res.send(`No ${SANITY_TOKEN} config variable`)
 
   if (email) {
     if (!MAILGUN_DOMAIN) return res.send(`No MAILGUN_DOMAIN config variable`)
@@ -69,32 +74,100 @@ app.get('/:projectId/:dataset/:Bucket/:email', (req, res) => {
     })
     .catch((err) => console.error(err))
 
-  res.send(
-    `<table border='1' cellpadding='10'>
-      <tr><td>Dataset:</td><td>${dataset}</td></tr>
-      <tr><td>Project ID:</td><td>${projectId}</td></tr>
-      <tr><td>S3 Bucket:</td><td>${Bucket}</td></tr>
-      <tr><td>S3 ACCESS_KEY:</td><td>${
-        ACCESS_KEY ? `Exists` : `Missing`
-      }</td></tr>
-      <tr><td>S3 SECRET_ACCESS_KEY:</td><td>${
-        SECRET_ACCESS_KEY ? `Exists` : `Missing`
-      }</td></tr>
-      <tr><td>SANITY_TOKEN:</td><td>${
-        SANITY_TOKEN ? `Exists` : `Missing`
-      }</td></tr>
-      <tr><td>Email:</td><td>${email}</td></tr>
-      <tr><td>MAILGUN_API:</td><td>${
-        MAILGUN_API ? `Exists` : `Missing`
-      }</td></tr>
-      <tr><td>MAILGUN_DOMAIN:</td><td>${
-        MAILGUN_DOMAIN ? `Exists` : `Missing`
-      }</td></tr>
-      <tr><td>MAILGUN_HOST:</td><td>${
-        MAILGUN_HOST ? `Exists` : `Missing`
-      }</td></tr>
-    </table>`
-  )
+  const config = [
+    {
+      title: 'Sanity',
+      rows: [
+        {
+          label: 'Dataset:',
+          value: dataset,
+          secret: false,
+        },
+        {
+          label: 'Project ID:',
+          value: projectId,
+          secret: false,
+        },
+        {
+          label: 'Sanity Token Key:',
+          value: sanityTokenKey,
+          secret: false,
+        },
+        {
+          label: 'SANITY_TOKEN',
+          value: SANITY_TOKEN,
+          secret: true,
+        },
+      ],
+    },
+    {
+      title: 'S3',
+      rows: [
+        {
+          label: 'Bucket:',
+          value: Bucket,
+          secret: false,
+        },
+        {
+          label: 'ACCESS_KEY',
+          value: ACCESS_KEY,
+          secret: true,
+        },
+        {
+          label: 'SECRET_ACCESS_KEY',
+          value: SECRET_ACCESS_KEY,
+          secret: true,
+        },
+      ],
+    },
+    {
+      title: 'Mailgun',
+      rows: [
+        {
+          label: 'Email:',
+          value: email,
+          secret: false,
+        },
+        {
+          label: 'MAILGUN_API',
+          value: MAILGUN_API,
+          secret: true,
+        },
+        {
+          label: 'MAILGUN_DOMAIN',
+          value: MAILGUN_DOMAIN,
+          secret: true,
+        },
+        {
+          label: 'MAILGUN_HOST',
+          value: MAILGUN_HOST,
+          secret: true,
+        },
+      ],
+    },
+  ]
+
+  const markup = config
+    .map(
+      (item) => `<h2>${item.title}</h2>
+      <table border='1' cellpadding='10'>
+    ${
+      item.rows
+        ? item.rows
+            .map(
+              (row) =>
+                `<tr><td>${row.label}</td><td>${
+                  row.secret ? (row.value ? `Exists` : `Missing`) : row.value
+                }</td></tr>`
+            )
+            .join('')
+        : '<tr><td colspan="2">No config found</td></tr>'
+    }
+  </table>`
+    )
+    .join('')
+
+  res.send(markup)
 })
 
 app.listen(port, () => {
