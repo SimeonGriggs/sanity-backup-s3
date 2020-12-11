@@ -1,5 +1,9 @@
 # Sanity Backup to S3
 
+I wrote a [better guide to this App on my website](https://www.simeongriggs.dev/backup-sanity-io-to-aws-s3), maybe read it instead? It's more colourful.
+
+---
+
 Satisfy your inner risk manager by taking automated backups from Sanity directly to your S3 bucket!
 
 1. Clone this repo
@@ -13,7 +17,7 @@ SECRET_ACCESS_KEY
 
 4. Add another config var from a `read` token for your Sanity project.
 
-This one is a bit tricker. You'll need a Token for each project you plan to backup. So if your Sanity Project ID is `asdf`, you'd need an Environment Variable called `ASDF_TOKEN`.
+This one is a bit tricker. You'll need a Token for each project you plan to backup. So if your Sanity Project ID is `asdf123`, you'd need an Environment Variable called `ASDF123_TOKEN`.
 
 ```
 <SANITY_PROJECT_ID_IN_ALL_CAPS>_TOKEN
